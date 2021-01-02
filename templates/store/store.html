@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Allsafe Shop Ltd | No #1 all stop shop
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    {% for product in products %}
+      <div class="col-md-4 col-lg-4 col-sm-12">
+        <img src="{{product.imageURL}}" alt="Thumbnail" class="thumbnail">
+        <div class="box-element product">
+          <h6><strong>{{product.title}}</strong></h6>
+          <hr>
+          <div class="btn-addto-cart">
+            <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+            <a href="{% url 'store:cart' %}" class="btn btn-outline-success">View</a>
+            <h4>${{product.price}}</h4>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

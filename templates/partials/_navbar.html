@@ -1,0 +1,38 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <div class="container">
+    <a href="{% url 'store:store' %}" class="navbar-brand">Allsafe Shop</a>
+
+    <button
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarMain"
+      aria-expanded="false"
+      aria-controls="navbarMain"
+      aria-label="Toggle navigation"
+    class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
+
+    <div class="collapse navbar-collapse" id="navbarMain">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a href="{% url 'store:store' %}" class="nav-link">Store</a>
+        </li>
+      </ul>
+  
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a href="/login" class="nav-link">Login</a>
+        </li>
+        <li>
+          <a href="{% url 'store:cart' %}" class="nav-link">
+            <img src="{% static 'images/cart.png' %}" alt="Cart" id="cart-icon">
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'store:cart' %}" class="nav-link"><span class="badge badge-danger">{{cartItems}}</span></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

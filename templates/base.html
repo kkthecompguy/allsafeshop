@@ -1,0 +1,83 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AYRc99ecUfplqXQGPi_6v4TYn4ZiPsr_y8Bv1rOf3hXuUH_p9_PettPZXRaOQhOW4-ym5YOIL7u1FLsL&currency=USD"></script>
+
+    <script>
+      const user = "{{request.user}}";
+      
+      function getToken(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+      }
+      let csrftoken = getToken('csrftoken');
+
+      function getCookie(name) {
+        // split cookie string and get all individual name=value pairs in an array
+        let cookieArr = document.cookie.split(";");
+
+        // Loop thru the array elements
+        for (let i = 0; i < cookieArr.length; i++) {
+          let cookiePair = cookieArr[i].split("=");
+
+          // Remove whitespace at the begining of the cookie name and compare it with the given string
+          if (name === cookiePair[0].trim()) {
+            // Decode the cookie value and return
+            return decodeURIComponent(cookiePair[1]);
+          }
+        }
+
+        // return null if not found
+        return null;
+      }
+
+      let cart = JSON.parse(getCookie('cart'));
+
+      if (cart === undefined || cart === null) {
+        cart = {};
+        console.log('cart was created', cart);
+        document.cookie = "cart=" + JSON.stringify(cart) + ";domain=;path=/"
+      }
+    </script>
+
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+    {% include 'partials/_navbar.html' %}
+
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
+    <script src="{% static 'js/cart.js' %}"></script>
+  </body>
+</html>
